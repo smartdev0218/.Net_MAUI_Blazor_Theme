@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:localization="clr-namespace:MauiLocalization.Resources.Localization"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:mauiLocalization="using:MauiLocalization"
+             x:Class="MauiLocalization.MainPage"
+             Title="{localization:Translate MainPageTitle}"
+             x:Name="MyPage"
+             x:DataType="mauiLocalization:MainPage">
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<toolkit:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
+			<Style TargetType="Label">
+				<Setter Property="FontSize" Value="18"/>
+				<Setter Property="HorizontalOptions" Value="Center"/>
+			</Style>
+			<Style x:Key="Description" TargetType="Label">
+				<Setter Property="FontSize" Value="14"/>
+				<Setter Property="HorizontalOptions" Value="Center"/>
+			</Style>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+
+	<ScrollView>
+		<VerticalStackLayout
+			Spacing="25"
+			Padding="30,0"
+			VerticalOptions="Center">
+
+			<Image
+				Source="{localization:Translate flag, Converter={StaticResource ByteArrayToImageSourceConverter}}"
+				SemanticProperties.Description="Flag"
+				HeightRequest="200"
+				HorizontalOptions="Center" />
+
+			<Label Text ="Static resource. Updates on App restart." Style="{StaticResource Description}"/>
+			<Label Text="{x:Static localization:AppResources.Intro}" />
+
+			<Label Text ="Resource updated dynamically, thanks to Binding. No restart needed."
+			       Style="{StaticResource Description}"/>
+			<Label Text="{Binding LocalizationResourceManager[Intro], Mode=OneWay}" />
+
+			<Label Text ="The same as above, but using MarkupExtension"
+			       Style="{StaticResource Description}"/>
+			<Label Text="{localization:Translate Intro}" />
+
+			
+			<Label x:Name="CodeBehindTranslator" />
+			<Label x:Name="CodeBehindTranslator2" />
+			<Label Text="{localization:Translate NameStringKey, BindingContext={x:Reference MyPage}}" />
+
+			<Picker x:Name="LanguagePicker"
+					SelectedIndexChanged="LanguageChanged"
+			        HorizontalOptions="Center" />
+
+		</VerticalStackLayout>
+	</ScrollView>
+
+</ContentPage>

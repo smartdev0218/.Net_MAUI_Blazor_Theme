@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+			 xmlns:vm="clr-namespace:MauiPaint"
+             x:Class="MauiPaint.MainPage"
+			 x:DataType="vm:MainPageViewModel">
+
+	<ContentPage.MenuBarItems>
+		<MenuBarItem Text="File">
+			<MenuFlyoutItem Text="New" Command="{Binding NewCommand}"/>
+			<MenuFlyoutItem Text="Open"  Command="{Binding OpenCommand}"/>
+			<MenuFlyoutItem Text="Save Project" Command="{Binding SaveCommand}"/>
+			<MenuFlyoutItem Text="Save Image" Command="{Binding SaveImageCommand}"/>
+			<MenuFlyoutItem Text="Quit" Command="{Binding QuitCommand}"/>
+		</MenuBarItem>
+		<MenuBarItem Text="View">
+			<MenuFlyoutItem Text="Toggle Light/Dark Mode" Command="{Binding ToggleThemeCommand}"/>
+		</MenuBarItem>
+		<MenuBarItem Text="Tools">
+			<MenuFlyoutItem Text="Paste from Clipboard" Command="{Binding PasteFromClipboardCommand}"/>
+		</MenuBarItem>
+		<MenuBarItem Text="Help">
+			<MenuFlyoutItem Text="Help" Command="{Binding HelpCommand}"/>
+			<MenuFlyoutItem Text="About" Command="{Binding AboutCommand}"/>
+		</MenuBarItem>
+	</ContentPage.MenuBarItems>
+
+	<Grid ColumnDefinitions="200, *" ColumnSpacing="10">
+		<Border  Grid.Column="0"
+		         Stroke="Gray"
+		         StrokeThickness="5">
+			<Border.StrokeShape>
+				<RoundRectangle CornerRadius="10"/>
+			</Border.StrokeShape>
+			<ScrollView Padding="10">
+				<VerticalStackLayout Spacing="10">
+					<Label Text="Background"/>
+					<mct:UniformItemsLayout>
+						<Button BackgroundColor="Red" Command="{Binding SetBackgroundCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="Green" Command="{Binding SetBackgroundCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="Blue" Command="{Binding SetBackgroundCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="Yellow" Command="{Binding SetBackgroundCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="Gray" Command="{Binding SetBackgroundCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="Black" Command="{Binding SetBackgroundCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="White" Command="{Binding SetBackgroundCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="Pink" Command="{Binding SetBackgroundCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="Brown" Command="{Binding SetBackgroundCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="Purple" Command="{Binding SetBackgroundCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="SkyBlue" Command="{Binding SetBackgroundCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="Orange" Command="{Binding SetBackgroundCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+					</mct:UniformItemsLayout>
+
+					<Label Text="Line width"/>
+					<Slider Maximum="100" Minimum="1" Value="{Binding LineWidth}"/>
+
+					<Label Text="Line color"/>
+					<mct:UniformItemsLayout>
+						<Button BackgroundColor="Red" Command="{Binding SetLineColorCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="Green" Command="{Binding SetLineColorCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="Blue" Command="{Binding SetLineColorCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="Yellow" Command="{Binding SetLineColorCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="Gray" Command="{Binding SetLineColorCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="Black" Command="{Binding SetLineColorCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="White" Command="{Binding SetLineColorCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="Pink" Command="{Binding SetLineColorCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="Brown" Command="{Binding SetLineColorCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="Purple" Command="{Binding SetLineColorCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="SkyBlue" Command="{Binding SetLineColorCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+						<Button BackgroundColor="Orange" Command="{Binding SetLineColorCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=BackgroundColor}"/>
+					</mct:UniformItemsLayout>
+
+					<Label Text="Eraser"/>
+					<Button Background="{Binding Background}" Command="{Binding SetEraserCommand}"/>
+
+					<Label Text="Figures"/>
+					<mct:UniformItemsLayout>
+						<Button Text="Rectangle" Command="{Binding AddFigureCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=Text}"/>
+						<Button Text="Ellipse" Command="{Binding AddFigureCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=Text}"/>
+						<Button Text="Text" Command="{Binding AddFigureCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=Text}"/>
+						<Button Text="Image" Command="{Binding AddFigureCommand}" CommandParameter="{Binding Source={RelativeSource Self}, Path=Text}"
+						        ToolTipProperties.Text="Doesn't work on Windows"/>
+					</mct:UniformItemsLayout>
+
+					<Label Text="Rotate"/>
+					<Slider x:Name="RotateSlider" Maximum="360">
+						<Slider.Behaviors>
+							<mct:EventToCommandBehavior EventName="ValueChanged"
+							                            Command="{Binding RotateCommand}"
+							                            CommandParameter="{Binding Path=Value, Source={x:Reference RotateSlider}}"/>
+						</Slider.Behaviors>
+					</Slider>
+				</VerticalStackLayout>
+			</ScrollView>
+		</Border>
+		<mct:DrawingView Grid.Column="1"
+						 Lines="{Binding Lines}"
+						 Background="{Binding Background}"
+						 LineColor="{Binding LineColor}"
+						 LineWidth="{Binding LineWidth}"
+						 IsMultiLineModeEnabled="True"
+						 DrawAction="{Binding DrawAction}"
+						 Width="{Binding CanvasWidth, Mode=OneWayToSource}"
+						 Height="{Binding CanvasHeight, Mode=OneWayToSource}">
+			<FlyoutBase.ContextFlyout>
+				<MenuFlyout>
+					<MenuFlyoutItem Text="Clear" Command="{Binding NewCommand}"/>
+				</MenuFlyout>
+			</FlyoutBase.ContextFlyout>
+		</mct:DrawingView>
+	</Grid>
+</ContentPage>
